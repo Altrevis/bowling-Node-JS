@@ -1,0 +1,14 @@
+{
+  "name": "bowling",
+  "version": "21.2.0",
+  "description": "Bowling CLI Node.js",
+  "main": "bowling.js",
+  "scripts": {
+    "start": "node bowling.js"
+  },
+  "author": "Altrevis",
+  "license": "MIT",
+  "dependencies": {
+    "readline": "^1.3.0"
+  }
+}

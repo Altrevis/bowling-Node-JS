@@ -95,3 +95,23 @@ function startGame() {
 
     askNumberOfPlayers();
 }
+
+function askPlayerNames(numPlayers) {
+    if (players.length < numPlayers) {
+        rl.question(`Entrez le nom du joueur ${players.length + 1}: `, (name) => {
+            players.push(new Player(name));
+            askPlayerNames(numPlayers);
+        });
+    } else {
+        playFrame();
+    }
+}
+
+function playFrame() {
+    const currentPlayer = players[currentPlayerIndex];
+    const currentFrame = currentPlayer.frames[currentPlayer.currentFrameIndex];
+
+    console.log(`Frame ${currentPlayer.currentFrameIndex + 1}, lancer 1.`);
+    playThrow(currentPlayer, currentFrame, 1);
+}
+

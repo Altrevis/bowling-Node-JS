@@ -75,3 +75,23 @@ class Frame {
     }
 }
 
+let players = [];
+let currentPlayerIndex = 0;
+
+function startGame() {
+    console.log('Démarrez une nouvelle partie de bowling.');
+
+    const askNumberOfPlayers = () => {
+        rl.question('Entrez le nombre de joueurs (entre 1 et 6): ', (answer) => {
+            const numPlayers = parseInt(answer);
+            if (isNaN(numPlayers) || numPlayers < 1 || numPlayers > 6) {
+                console.log('Nombre de joueurs invalide. Veuillez entrer un nombre entre 1 et 6.');
+                askNumberOfPlayers();
+            } else {
+                askPlayerNames(numPlayers);
+            }
+        });
+    };
+
+    askNumberOfPlayers();
+}

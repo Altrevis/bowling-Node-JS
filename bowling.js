@@ -115,3 +115,36 @@ function playFrame() {
     playThrow(currentPlayer, currentFrame, 1);
 }
 
+function playThrow(player, frame, throwNumber) {
+    rl.question(`${player.name}, combien de quilles avez-vous renversé ? `, (answer) => {
+        const pins = parseInt(answer);
+        
+        if (!isNaN(pins) && pins >= 0 && pins <= 10) {
+            frame.addThrow(pins);
+            
+            if (throwNumber === 1 && !frame.isStrike()) {
+                console.log(`Frame ${player.currentFrameIndex + 1}, lancer 2.`);
+                playThrow(player, frame, 2);
+            } else {
+                if (player.currentFrameIndex < 9 || (player.currentFrameIndex === 9 && !frame.isStrike() && !frame.isSpare())) {
+                    player.calculateScore();
+                    console.log(`Score après le frame ${player.currentFrameIndex + 1}:`);
+                    players.forEach(p => console.log(`${p.name}: ${p.totalScore}`));
+                    player.currentFrameIndex++;
+                    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+                    playFrame();
+                } else {
+                    if (frame.isStrike() || frame.isSpare()) {
+                        console.log(`Frame ${player.currentFrameIndex + 1}, lancer 2.`);
+                        playThrow(player, frame, 2);
+                    } else {
+                        endGame();
+                    }
+                }
+            }
+        } else {
+            console.log('Nombre de quilles invalide. Veuillez entrer un nombre entre 0 et 10.');
+            playThrow(player, frame, throwNumber);
+        }
+    });
+}

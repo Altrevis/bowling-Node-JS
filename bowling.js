@@ -148,3 +148,21 @@ function playThrow(player, frame, throwNumber) {
         }
     });
 }
+
+function endGame() {
+    players.forEach(player => player.calculateScore());
+    console.log('Score final:');
+    players.forEach(player => console.log(`${player.name}: ${player.totalScore}`));
+
+    let maxScore = Math.max(...players.map(player => player.totalScore));
+    let winners = players.filter(player => player.totalScore === maxScore).map(player => player.name);
+    if (winners.length === 1) {
+        console.log(`${winners[0]} est le/la gagnant(e) !`);
+    } else {
+        console.log(`Il y a une égalité entre les joueurs suivants : ${winners.join(', ')}`);
+    }
+
+    rl.close();
+}
+
+startGame();
